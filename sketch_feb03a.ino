@@ -1,36 +1,37 @@
-const int buttonPin = 2;
-const int ledPin = 7;
-int buttonState = 0;
-int state = HIGH; 
+/* Arduino tutorial - Buzzer / Piezo Speaker
+   More info and circuit: http://www.ardumotive.com/how-to-use-a-buzzer-en.html
+   Dev: Michalis Vasilakis // Date: 9/6/2015 // www.ardumotive.com */
 
-void setup() {
-  pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, HIGH);
+
+const int buzzer = 9; //buzzer to arduino pin 9
+const int led = 7;
+const int button = 2;
+int buttonState = 0;
+
+int data;
+
+
+void setup(){
+ 
+  pinMode(buzzer, OUTPUT); // Set buzzer - pin 9 as an output
+  pinMode(led,OUTPUT);
+  pinMode(button,INPUT_PULLUP);
+  Serial.begin(9600);
+  //digitalWrite(led,HIGH);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  buttonState = digitalRead(buttonPin);
-  /*if (buttonState == HIGH) {
-    digitalWrite(ledPin, HIGH); 
-  }
-  else{
-    digitalWrite(ledPin, LOW); 
-  }*/
-  if(buttonState == LOW && state == LOW){
-    digitalWrite(ledPin, HIGH);
-    state = HIGH;
-    while(buttonState != HIGH){
-      buttonState = digitalRead(buttonPin);
-      }
-  }
-  else if(buttonState == LOW && state == HIGH){
-    digitalWrite(ledPin, LOW);
-    state = LOW;
-    while(buttonState != HIGH){
-      buttonState = digitalRead(buttonPin);
-      }
+void loop(){
+
+  buttonState = digitalRead(button);
+  if(buttonState ==LOW){
+    digitalWrite(led, HIGH);
+    tone(buzzer, 1000);
+    }
+    
+  else {
+    digitalWrite(led, LOW);
+     noTone(buzzer);
+   
   }
   
 }
